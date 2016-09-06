@@ -15,7 +15,7 @@ var paymentRouter= express.Router();
 var logoutRouter= express.Router();
 var thankYouRouter= express.Router();
 var connection= mysql.createConnection({
-    host: process.env.MYSQL_HOST || "localhost",
+    host:process.env.MYSQL_HOST || "localhost",
     user:process.env.MYSQL_USERNAME|| "root",
     password:process.env.MYSQL_PASSWORD||"",
     database:process.env.MYSQL_DB||"shopping"
