@@ -27,7 +27,7 @@ app.use(express.static("./static"));
 app.use("/nodestatic", express.static("./node_modules"));
 app.use(cookieParser());
 app.use(session({secret: "shhhhh"}));
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 app.use("/", homeRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
