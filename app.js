@@ -77,7 +77,7 @@ homeRouter.get("/search", function(request, response){
     };
     if(request.query.searchQuery && request.query.searchQuery!=""){
     var searchQuery=request.query.searchQuery+"%";
-    connection.query("SELECT Product_Name, Product_Price, Product_ID FROM Products WHERE Product_Name LIKE ? OR Product_Brands LIKE ?", [searchQuery, searchQuery], function(error, res){
+    connection.query("SELECT Product_Name, Product_Price, Product_ID FROM products WHERE Product_Name LIKE ? OR Product_Brands LIKE ?", [searchQuery, searchQuery], function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code";
@@ -106,7 +106,7 @@ homeRouter.get("/snippet/PhonesTablets", function(request, response){
         sellerIds:[],
         reply:""
     }
-    connection.query("SELECT Product_Id, Product_Name, Product_Price, Seller_ID FROM Products WHERE Product_Category='Phones/Tablets'", function(error, res){
+    connection.query("SELECT Product_Id, Product_Name, Product_Price, Seller_ID FROM products WHERE Product_Category='Phones/Tablets'", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error "+error;
@@ -132,7 +132,7 @@ homeRouter.get("/snippet/HomeAppliances", function(request, response){
         sellerIds:[],
         reply:""
     }
-    connection.query("SELECT Product_Id, Product_Name, Product_Price, Seller_ID FROM Products WHERE Product_Category='Home Appliances'", function(error, res){
+    connection.query("SELECT Product_Id, Product_Name, Product_Price, Seller_ID FROM products WHERE Product_Category='Home Appliances'", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error "+error;
@@ -158,7 +158,7 @@ homeRouter.get("/featuredContent", function(request, response){
         ids:[],
         sellerIds:[]
     }
-    connection.query("SELECT Product_ID, Product_Name, Product_Price, Seller_ID FROM Products WHERE featured=1", function(error, res){
+    connection.query("SELECT Product_ID, Product_Name, Product_Price, Seller_ID FROM products WHERE featured=1", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code";
@@ -183,7 +183,7 @@ homeRouter.get("/cat/homeapp", function(request, response){
         items:[5],
         reply:""
     };
-    connection.query("SELECT DISTINCT Product_Brands FROM Products WHERE Product_Category='Home Appliances' ", function(error, res){
+    connection.query("SELECT DISTINCT Product_Brands FROM products WHERE Product_Category='Home Appliances' ", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code "+error;
@@ -206,7 +206,7 @@ homeRouter.get("/category", function(request, response){
         error:1,
         results:""
     };
-    connection.query("SELECT Product_Id, Product_Name, Seller_ID, Product_Price, Product_Brands FROM Products WHERE Product_Category =? ", [category], function(error, res){
+    connection.query("SELECT Product_Id, Product_Name, Seller_ID, Product_Price, Product_Brands FROM products WHERE Product_Category =? ", [category], function(error, res){
         if(error){
             data.error=1;
             data.results="There is an error in code "+error;
