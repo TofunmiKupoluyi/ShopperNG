@@ -20,7 +20,7 @@ var connection= mysql.createConnection({
     password:process.env.MYSQL_PASSWORD||"",
     database:process.env.MYSQL_DB||"shopping"
 });
-console.log(connection._protocol._config);
+
 var flutterwave= new Flutterwave("tk_9eFaO7BCLXiWhTyJRAnq", "tk_snN5ZPBHxO");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -44,6 +44,7 @@ app.use(function(err, req, res, next) {
 homeRouter.get("/", function(request, response){
     request.session.initialize="Hello";
     console.log(request.session.initialize);
+    console.log(connection._protocol._config);
     response.sendfile("./");
 });
 homeRouter.get("/cat/phonestab", function(request, response){
