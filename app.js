@@ -240,7 +240,7 @@ signupRouter.post("/", function(request, response){
         error:1,
         reply:""
     };
-    connection.query("SELECT * FROM Customers WHERE email=?",[email], function(err, res){
+    connection.query("SELECT * FROM customers WHERE email=?",[email], function(err, res){
         if(res.length==0){
             if(password && !(password.length>8 && /[A-Z]/.test(password)&&/[0-9]/.test(password))){
                 data.error=1;
@@ -248,7 +248,7 @@ signupRouter.post("/", function(request, response){
                 response.json(data);
             }
              else{      
-            connection.query("INSERT INTO Customers(Customer_First_Name, Customer_Last_Name, Email, Password) VALUES(?, ?, ?, ?)", [firstName, lastName, email, password], function(err1, res1){
+            connection.query("INSERT INTO customers(Customer_First_Name, Customer_Last_Name, Email, Password) VALUES(?, ?, ?, ?)", [firstName, lastName, email, password], function(err1, res1){
                 if(err1){
                     data.error=1;
                     data.reply="Error inputting data "+err1;
@@ -292,7 +292,7 @@ loginRouter.post("/", function(request, response){
         LastName:""
     };
     //verifiction 
-    connection.query("SELECT Password, Customer_ID, Customer_First_Name, Customer_Last_Name FROM Customers WHERE email=?",[email], function(err, res){
+    connection.query("SELECT Password, Customer_ID, Customer_First_Name, Customer_Last_Name FROM customers WHERE email=?",[email], function(err, res){
         if(err){
             data.error=1;
             data.reply="Error in code"+err;
@@ -417,7 +417,7 @@ checkoutRouter.post("/submitInformation", function(request, response){
         reply:""
     };
     
-    connection.query("UPDATE Customers SET Customer_First_Name=?, Customer_Last_Name=?, address1=?, address2=?, city=?, country=?, customer_phone=?  WHERE email=?", [firstName, lastName, address1, address2, city, country, phone, email] , function(error, res){
+    connection.query("UPDATE customers SET Customer_First_Name=?, Customer_Last_Name=?, address1=?, address2=?, city=?, country=?, customer_phone=?  WHERE email=?", [firstName, lastName, address1, address2, city, country, phone, email] , function(error, res){
         if(error){
             data.error=1;
             data.reply="Error: "+error;
@@ -475,7 +475,7 @@ paymentRouter.post("/payCard", function(request, response){
         var sqlDate= date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate; //Assigning Order_Date
         //Looping through items bought array and inserting each item individually
         for(var i=0; i<request.session.itemsBought.length;i++){
-            connection.query("INSERT INTO Orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], body.data.responsemessage, request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
+            connection.query("INSERT INTO orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], body.data.responsemessage, request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
                 if(error){
                     console.log(error); //This logs any error in code
                 }
@@ -569,7 +569,7 @@ paymentRouter.post("/payAccount", function(request, response){
                     var sqlDate= date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate; //Assigning Order_Date
                     //Looping through items bought array and inserting each item individually
                     for(var i=0; i<request.session.itemsBought.length;i++){
-                        connection.query("INSERT INTO Orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], "Successful", request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
+                        connection.query("INSERT INTO orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], "Successful", request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
                             if(error){
                                 console.log(error); //This logs any error in code
                             }
