@@ -15,10 +15,10 @@ var paymentRouter= express.Router();
 var logoutRouter= express.Router();
 var thankYouRouter= express.Router();
 var connection= mysql.createConnection({
-    host:process.env.MYSQL_HOST || "pwc-interns.cftwcjh3k0vd.us-west-2.rds.amazonaws.com",
-    user:process.env.MYSQL_USERNAME|| "pwc_tofunmi",
-    password:process.env.MYSQL_PASSWORD||"hgbhbdw8934839!!",
-    database:process.env.MYSQL_DB||"pwc_tofunmi"
+    host:process.env.MYSQL_HOST || "localhost",
+    user:process.env.MYSQL_USERNAME|| "root",
+    password:process.env.MYSQL_PASSWORD||"",
+    database:process.env.MYSQL_DB||"shopping",
 });
 
 var flutterwave= new Flutterwave("tk_9eFaO7BCLXiWhTyJRAnq", "tk_snN5ZPBHxO");
