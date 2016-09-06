@@ -20,6 +20,7 @@ var connection= mysql.createConnection({
     password:process.env.MYSQL_PASSWORD||"",
     database:process.env.MYSQL_DB||"shopping"
 });
+console.log(connection._protocol._config);
 var flutterwave= new Flutterwave("tk_9eFaO7BCLXiWhTyJRAnq", "tk_snN5ZPBHxO");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
