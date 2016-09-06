@@ -53,7 +53,7 @@ homeRouter.get("/cat/phonestab", function(request, response){
         items:[5],
         reply:""
     };
-    connection.query("SELECT DISTINCT Product_Brands FROM Products WHERE Product_Category='Phones/Tablets' ", function(error, res){
+    connection.query("SELECT DISTINCT Product_Brands FROM products WHERE Product_Category='Phones/Tablets' ", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code "+error;
