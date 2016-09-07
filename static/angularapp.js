@@ -238,6 +238,10 @@ app.controller("cartItemsController", function($rootScope,$scope, $http){
 
         $scope.increaseQuantity= function(itemId, itemQuantity){
             console.log($scope.uniqueItems);
+            function filterFunction(obj){
+                return obj["itemQuantity"]!=0;
+            } 
+            $scope.uniqueItems= $scope.uniqueItems.filter(filterFunction);
             $http.post("/cart/cartItems/update", $scope.uniqueItems).then(function(response){
                 console.log($scope.uniqueItems);
             });

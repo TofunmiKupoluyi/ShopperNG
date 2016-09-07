@@ -156,7 +156,7 @@
                                     <p class="cart_total_price">{{x.itemPrice*x.itemQuantity}}</p>
                                 </td> 
                                 <td class="cart_delete">
-                                    <a class="cart_quantity_delete" ng-click="x.itemQuantity=0" href=""><i class="fa fa-times"></i></a>
+                                    <a class="cart_quantity_delete" ng-click="x.itemQuantity=0; increaseQuantity(itemId, itemQuantity)" href=""><i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
                         </tbody>
