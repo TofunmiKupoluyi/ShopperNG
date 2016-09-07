@@ -205,23 +205,24 @@ app.controller("cartItemsController", function($rootScope,$scope, $http){
         console.log(valueIsSet);
 
         if(!valueIsSet){
-            var duplicates=[];
-            for(var i=0; i<$scope.items.length; i++){
-                for(var y=$scope.items.length-1; y>=0; y--){
-                    if($scope.items[i]["itemId"]==$scope.items[y]["itemId"]){
-                        duplicates.push($scope.items[i]);
-                    }
-                }
-            }
-
+            var duplicates=$scope.items;
+            // for(var i=0; i<$scope.items.length; i++){
+            //     for(var y=$scope.items.length-1; y>=0; y--){
+            //         if($scope.items[i]["itemId"]==$scope.items[y]["itemId"]){
+            //             duplicates.push($scope.items[i]);
+            //         }
+            //     }
+            // }
+            duplicates= duplicates.sort(function(a,b){return a["itemId"]-b["itemId"]});
+            console.log(duplicates);
             $scope.uniqueItems=[];
             var y=0;
             for(var i=1; i<duplicates.length; i++){
-            if(duplicates[i]["itemId"]!=duplicates[i-1]["itemId"]){
-                $scope.uniqueItems[y]= duplicates[i-1];
-                console.log(duplicates[i]);
-                y+=1;
-            }
+                if(duplicates[i]["itemId"]!=duplicates[i-1]["itemId"]){
+                    $scope.uniqueItems[y]= duplicates[i-1];
+                    console.log(duplicates[i]);
+                    y+=1;
+                }
             }
             $scope.uniqueItems[$scope.uniqueItems.length]=duplicates[duplicates.length-1];
         }
