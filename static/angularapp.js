@@ -201,37 +201,27 @@ app.controller("cartItemsController", function($rootScope,$scope, $http){
     $http.get("/cart/cartItems").then(function(response){
         $rootScope.visited+=1;
         $scope.items= response.data.itemsBought;
-        var valueIsSet= response.data.nowSet;
-        console.log(valueIsSet);
-
-        if(!valueIsSet){
-            var duplicates=$scope.items;
-            // for(var i=0; i<$scope.items.length; i++){
-            //     for(var y=$scope.items.length-1; y>=0; y--){
-            //         if($scope.items[i]["itemId"]==$scope.items[y]["itemId"]){
-            //             duplicates.push($scope.items[i]);
-            //         }
-            //     }
-            // }
-            duplicates= duplicates.sort(function(a,b){return a["itemId"]-b["itemId"]});
-            console.log(duplicates);
-            $scope.uniqueItems=[];
-            var y=0;
-            for(var i=1; i<duplicates.length; i++){
-                if(duplicates[i]["itemId"]!=duplicates[i-1]["itemId"]){
-                    $scope.uniqueItems[y]= duplicates[i-1];
-                    console.log(duplicates[i]);
-                    y+=1;
-                }
+        // var valueIsSet= response.data.nowSet;
+        var duplicates=$scope.items;
+        // for(var i=0; i<$scope.items.length; i++){
+        //     for(var y=$scope.items.length-1; y>=0; y--){
+        //         if($scope.items[i]["itemId"]==$scope.items[y]["itemId"]){
+        //             duplicates.push($scope.items[i]);
+        //         }
+        //     }
+        // }
+        duplicates= duplicates.sort(function(a,b){return a["itemId"]-b["itemId"]});
+        console.log(duplicates);
+        $scope.uniqueItems=[];
+        var y=0;
+        for(var i=1; i<duplicates.length; i++){
+            if(duplicates[i]["itemId"]!=duplicates[i-1]["itemId"]){
+                $scope.uniqueItems[y]= duplicates[i-1];
+                console.log(duplicates[i]);
+                y+=1;
             }
-            $scope.uniqueItems[$scope.uniqueItems.length]=duplicates[duplicates.length-1];
         }
-
-        else{
-            $scope.uniqueItems= response.data.itemsBought;
-            console.log(response.data.itemsBought);
-        }
-
+        $scope.uniqueItems[$scope.uniqueItems.length]=duplicates[duplicates.length-1];
         console.log($scope.uniqueItems);
         $rootScope.numberItemsBought= $scope.uniqueItems.length;
         $http.post("/cart/cartItems", $scope.uniqueItems);
@@ -247,13 +237,18 @@ app.controller("cartItemsController", function($rootScope,$scope, $http){
             });
         };
 
+        // function setTotalPrice(totalPrice){
+        //     $scope.totalPrice=totalPrice;
+        // } --To be implemented to make total price generation automatic
         $scope.getTotalPrice= function(){
             var totalPrice=0;
             for(var i=0; i<$scope.uniqueItems.length; i++){
                 totalPrice+= $scope.uniqueItems[i]["itemPrice"]*$scope.uniqueItems[i]["itemQuantity"];
             }
+            // setTotalPrice(totalPrice); -- To be implemented to make total price generation automatic
             return totalPrice;
         };
+
     });
 
 });
