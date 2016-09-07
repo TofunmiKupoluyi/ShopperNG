@@ -309,6 +309,7 @@ app.controller("checkoutController", function($scope, $http){
 
 app.controller("paymentController", function($scope, $http){
     $scope.buyCard= function(){
+        $scope.message="Please Wait ...";
         var encryptedCardNumber=GibberishAES.enc($scope.cardNo, "wowejrwnrmiowerj90239jr30j2r93jj9304j9023rj903j24");
 
         var cardDetails={
@@ -341,6 +342,7 @@ app.controller("paymentController", function($scope, $http){
 
     };
     $scope.chargeAccount= function(){
+        $scope.message="Please Wait ...";
         var encryptedAccountNumber= GibberishAES.enc($scope.accountNumber, "qw9hr98yhr39uu993r29rjoiw89wud9hwsd0ifu89wjow09fwf12");
         var accountDetails={
             accountNumber: encryptedAccountNumber,
