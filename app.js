@@ -19,6 +19,7 @@ var connection= mysql.createConnection({
     user:process.env.MYSQL_USERNAME|| "root",
     password:process.env.MYSQL_PASSWORD||"",
     database:process.env.MYSQL_DB||"shopping",
+
 });
 
 var flutterwave= new Flutterwave("tk_9eFaO7BCLXiWhTyJRAnq", "tk_snN5ZPBHxO");
@@ -77,7 +78,7 @@ homeRouter.get("/search", function(request, response){
     };
     if(request.query.searchQuery && request.query.searchQuery!=""){
     var searchQuery=request.query.searchQuery+"%";
-    connection.query("SELECT Product_Name, Product_Price, Product_ID FROM products WHERE Product_Name LIKE ? OR Product_Brands LIKE ?", [searchQuery, searchQuery], function(error, res){
+    connection.query("SELECT Product_Name, Product_Price, Product_Id FROM products WHERE Product_Name LIKE ? OR Product_Brands LIKE ?", [searchQuery, searchQuery], function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code";
@@ -158,7 +159,7 @@ homeRouter.get("/featuredContent", function(request, response){
         ids:[],
         sellerIds:[]
     }
-    connection.query("SELECT Product_ID, Product_Name, Product_Price, Seller_ID FROM products WHERE featured=1", function(error, res){
+    connection.query("SELECT Product_Id, Product_Name, Product_Price, Seller_ID FROM products WHERE featured=1", function(error, res){
         if(error){
             data.error=1;
             data.reply="Error in code";
@@ -170,7 +171,7 @@ homeRouter.get("/featuredContent", function(request, response){
             for(var i=0; i<res.length;i++){
                 data.names[i]= res[i]["Product_Name"];
                 data.prices[i]= res[i]["Product_Price"];
-                data.ids[i]= res[i]["Product_ID"];
+                data.ids[i]= res[i]["Product_Id"];
                 data.sellerIds[i]= res[i]["Seller_ID"];
             }
             response.json(data);
@@ -292,7 +293,7 @@ loginRouter.post("/", function(request, response){
         LastName:""
     };
     //verifiction 
-    connection.query("SELECT Password, Customer_ID, Customer_First_Name, Customer_Last_Name FROM customers WHERE email=?",[email], function(err, res){
+    connection.query("SELECT Password, Customer_Id, Customer_First_Name, Customer_Last_Name FROM customers WHERE email=?",[email], function(err, res){
         if(err){
             data.error=1;
             data.reply="Error in code"+err;
@@ -305,10 +306,10 @@ loginRouter.post("/", function(request, response){
                     data.error=0;
                     data.reply="Login successful";
                     loginState=data.loginState;
-                    data.CustomerID=res[0]["Customer_ID"];
+                    data.CustomerID=res[0]["Customer_Id"];
                     data.FirstName= res[0]["Customer_First_Name"];
                     data.LastName= res[0]["Customer_Last_Name"];
-                    request.session.customerRefNo=res[0]["Customer_ID"];
+                    request.session.customerRefNo=res[0]["Customer_Id"];
                     console.log("Login successful, Customer: "+request.session.customerRefNo);
                     request.session.email=email;
                     response.json(data);
@@ -475,7 +476,7 @@ paymentRouter.post("/payCard", function(request, response){
         var sqlDate= date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate; //Assigning Order_Date
         //Looping through items bought array and inserting each item individually
         for(var i=0; i<request.session.itemsBought.length;i++){
-            connection.query("INSERT INTO orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], body.data.responsemessage, request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
+            connection.query("INSERT INTO orders (Order_Date, Product_Id, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], body.data.responsemessage, request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
                 if(error){
                     console.log(error); //This logs any error in code
                 }
@@ -569,7 +570,7 @@ paymentRouter.post("/payAccount", function(request, response){
                     var sqlDate= date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate; //Assigning Order_Date
                     //Looping through items bought array and inserting each item individually
                     for(var i=0; i<request.session.itemsBought.length;i++){
-                        connection.query("INSERT INTO orders (Order_Date, Product_ID, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], "Successful", request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
+                        connection.query("INSERT INTO orders (Order_Date, Product_Id, Seller_ID, Status, Customer_Id, Quantity) VALUES(?,?,?,?,?,?)", [sqlDate, request.session.itemsBought[i]["itemId"], request.session.itemsBought[i]["sellerId"], "Successful", request.session.customerRefNo, request.session.itemsBought[i]["itemQuantity"]], function(error, resp){
                             if(error){
                                 console.log(error); //This logs any error in code
                             }
