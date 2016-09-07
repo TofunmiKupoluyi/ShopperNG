@@ -43,6 +43,7 @@ flutterwave.Card.tokenize
 
 ```
 //Charge a card
+/*Note that the country parameter is required if you are specifying a currency other than "NGN"*/
 flutterwave.Card.charge
     ( 
         {
@@ -50,6 +51,7 @@ flutterwave.Card.charge
             "authmodel": "PIN | BVN | RANDOM_DEBIT | VBVSECURECODE | NOAUTH",
             "cardno": "9934889489",
             "currency": "NGN",
+            "country": "NG",
             "custid": "849389",
             "cvv": "433", 
             "expirymonth": "09",

@@ -79,9 +79,12 @@ FlutterwaveBase.prototype.objectBuilder = function (eval_dict) {
 	return new objectbuilder(eval_dict);
 }
 
-FlutterwaveBase.prototype.decryptText = function (encrypted_text, key) {
-	key = FlutterwaveUtils.initDefaultValue(key, '');
-	return require('./flw.decrypt')(key, encrypted_text);
+FlutterwaveBase.prototype.decryptText = function (key) {
+	key = key || '';
+	return function (encrypted_text, key_to_use) {
+		key_to_use = FlutterwaveUtils.initDefaultValue(key_to_use, key);
+		return require('./flw.decrypt')(key_to_use, encrypted_text);
+	} 
 }
 
 FlutterwaveBase.prototype.validateAndEncryptParams = function (params, paramDictionary, encryptKey) {

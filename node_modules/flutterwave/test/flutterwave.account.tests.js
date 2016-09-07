@@ -28,6 +28,22 @@ describe('#FlutterwaveAccountTest', function () {
 	}); 
 
 
+	it('Should return "Successful, pending OTP validation"', function (done) { 
+		this.timeout(50000);
+	    var flutterwavebase = new flwBase('tk_NabYp2XjZ6G9WwdFruzK','tk_tdyrSMQo8a');
+		var flutterwaveaccount  = new flwAccount(flutterwavebase);
+		/*console.log*/(flutterwaveaccount.resolveAccount({
+			"destbankcode":"076",
+			"recipientaccount":"1040917513",
+		}, function (err, res, body) { console.log(err,body);
+			expect(body).to.have.property('data'); 
+			expect(body.data.responseMessage).to.equal('Successful, pending OTP validation');
+			done(); 
+		}));
+	     
+	});
+
+
 	
 
 });

@@ -144,6 +144,58 @@ var FlutterwaveCard = function (FlutterwaveBase) {
 
 
 	/**
+	* Get information about a card
+	*
+	* @method enquiry
+	* @param {Object} cardData {amount, currency, merchants, trxreference, trxauthorizeid}
+	* @param {Function} callback
+	*/ 
+	this.enquiry = function (cardData, callback) {
+
+		var requestParams    = {};
+		cardData.merchantid  = FlutterwaveBase.getMerchantKey();
+		requestParams.data   = FlutterwaveBase.validateAndEncryptParams(cardData, this.endpointParamSpec('/mvva/cardenquiry'), FlutterwaveBase.getMerchantAPIKey());
+		requestParams.method = 'POST';
+		return FlutterwaveBase.makeRequest('card/mvva/cardenquiry', requestParams, callback);
+	}
+
+
+
+	/**
+	* Validates enquiry info
+	*
+	* @method enquiry
+	* @param {Object} cardData {amount, currency, merchants, trxreference, trxauthorizeid}
+	* @param {Function} callback
+	*/ 
+	this.validateEnquiry = function (cardData, callback) {
+
+		var requestParams    = {};
+		cardData.merchantid  = FlutterwaveBase.getMerchantKey();
+		requestParams.data   = FlutterwaveBase.validateAndEncryptParams(cardData, this.endpointParamSpec('/cardenquiry/validate'), FlutterwaveBase.getMerchantAPIKey());
+		requestParams.method = 'POST';
+		return FlutterwaveBase.makeRequest('card/mvva/cardenquiry/validate', requestParams, callback);
+	}
+
+
+	/**
+	* Withdraw
+	*
+	* @method enquiry
+	* @param {Object} cardData {amount, accountno, validateoption, merchant, trxreference}
+	* @param {Function} callback
+	*/ 
+	this.withdraw = function (cardData, callback) {
+
+		var requestParams    = {};
+		cardData.merchantid  = FlutterwaveBase.getMerchantKey();
+		requestParams.data   = FlutterwaveBase.validateAndEncryptParams(cardData, this.endpointParamSpec('/card/withdraw'), FlutterwaveBase.getMerchantAPIKey());
+		requestParams.method = 'POST';
+		return FlutterwaveBase.makeRequest('card/mvva/withdraw/', requestParams, callback);
+	}
+
+
+	/**
 	* Verify the status of a transaction
 	*
 	* @method status
@@ -190,6 +242,36 @@ var FlutterwaveCard = function (FlutterwaveBase) {
 						     .build('cardtype', 'required:false, encrypt:true')  
 						     .build('country', 'required:false, encrypt:true')  
 						     .build('chargetoken', 'required:true, encrypt:true')
+						     .build('merchantid', 'required:true, encrypt:false')
+						     .end();
+
+ 
+
+		specs['/card/withdraw']   = FlutterwaveBase.objectBuilder({})
+						     .build('amount', 'required:true, encrypt:true') 
+						     .build('accountno', 'required:true, encrypt:true')
+						     .build('validateoption', 'required:true, encrypt:true')   
+						     .build('trxreference', 'required:true, encrypt:true')  
+						     .build('merchantid', 'required:true, encrypt:false')
+						     .end(); 
+
+
+	 
+		specs['/mvva/cardenquiry']   = FlutterwaveBase.objectBuilder({})
+						     .build('pin', 'required:true, encrypt:true') 
+						     .build('expirymonth', 'required:true, encrypt:true')
+						     .build('expiryyear', 'required:true, encrypt:true')
+						     .build('cvv', 'required:true, encrypt:true') 
+						     .build('cardno', 'required:false, encrypt:true')  
+						     .build('trxreference', 'required:false, encrypt:true')  
+						     .build('merchantid', 'required:true, encrypt:false')
+						     .end(); 
+
+
+		specs['/cardenquiry/validate']   = FlutterwaveBase.objectBuilder({})
+						     .build('otp', 'required:true, encrypt:true') 
+						     .build('otptransactionidentifier', 'required:true, encrypt:true')  
+						     .build('trxreference', 'required:false, encrypt:true')  
 						     .build('merchantid', 'required:true, encrypt:false')
 						     .end(); 
 

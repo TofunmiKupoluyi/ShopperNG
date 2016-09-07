@@ -52,7 +52,7 @@ describe('#FlutterwaveBVNTest', function () {
 		this.timeout(500000);
 	    var flutterwavebase = new flwBase('tk_NabYp2XjZ6G9WwdFruzK','tk_tdyrSMQo8a');
 		var flutterwavebvn  = new flwBvn(flutterwavebase); 
-    	flutterwavebvn.resendOTP('SMS', 'FLW00291323', function (err, res, body) {
+    	flutterwavebvn.resendOTP('SMS', 'FLW01230291323', function (err, res, body) {
     		expect(res.statusCode == 200).to.equal(true);
     		expect(body.data.responsemessage).to.equal('Successful, pending OTP validation');
     		done();

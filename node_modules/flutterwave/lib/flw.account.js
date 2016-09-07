@@ -97,10 +97,34 @@ var FlutterwaveAccount = function (FlutterwaveBase) {
 		return FlutterwaveBase.makeRequest('recurrent/account/charge',  requestParams, callback);
 
 	}
+
+
+	/**
+	* Resolve an account (Get information about an account owner)
+	*
+	* @method resolveAccount
+	* @param {Object} accountData {destbankcode, recipientaccount, merchantid}
+	* @param {Function} callback
+	*/ 
+	this.resolveAccount = function (accountData, callback) { 
+
+		var requestParams      = {};
+		accountData.merchantid = FlutterwaveBase.getMerchantKey();
+		requestParams.data     = FlutterwaveBase.validateAndEncryptParams(accountData, this.endpointParamSpec('/account/resolve'), FlutterwaveBase.getMerchantAPIKey());
+		requestParams.method   = 'POST'; 
+		return FlutterwaveBase.makeRequest('pay/resolveaccount',  requestParams, callback);
+
+	}
  
 	this.endpointParamSpec = function (path)
 	{
-		var specs = {};
+		var specs = {}; 
+
+		specs['/account/resolve'] = FlutterwaveBase.objectBuilder({})
+						     .build('destbankcode', 'required:true, encrypt:true') 
+						     .build('recipientaccount', 'required:true, encrypt:true')   
+						     .build('merchantid', 'required:true, encrypt:false') 
+						     .end(); 
 
 		specs['/recurrent/account'] = FlutterwaveBase.objectBuilder({})
 						     .build('accountNumber', 'required:true, encrypt:true')  
