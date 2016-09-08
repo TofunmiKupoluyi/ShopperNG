@@ -8,6 +8,7 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
+		<link href="malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.css" rel="stylesheet">
 		<style>
 			.product-overlay{
 				background-color:rgba(254, 152, 15, 0.7);
@@ -450,6 +451,19 @@
                                     </div>
                                 </div>
                             </div>
+
+							<div class="hidden-xs col-lg-3 "  style="position:fixed; bottom:10; left:50; z-index:100;">
+								<button class="btn btn-default" ng-click="visible=!visible"> Toggle Cart History</button>
+								<br><br>
+								<div class="panel panel-default" ng-show="visible"><div class="panel-heading"><h3><small>Cart History</small></h3></div>
+									<div id="boughtItems" class="list-group" style="max-height:200px; overflow-y:auto;">
+										<div class="scrollbar-inner">
+											<a href="/cart" class="list-group-item" ng-repeat="x in addToCartMessage">{{x.message}}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+									
                         </div><!--features_items-->
                         
                         <div class="category-tab"><!--category-tab-->
@@ -917,11 +931,21 @@
 		
         <script src="jquery.js"></script>
         <script src="jquery.scrollUp.min.js"></script>
+		<script src="malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.js"></script>
         <script src="angular.min.js"></script>
         <script src="angularapp.js"></script>
         <script src="bootstrap.min.js"></script>
         <script src="price-range.js"></script>
         <script src="jquery.prettyPhoto.js"></script>
         <script src="main.js"></script>
+		<script>
+			(function($){
+				$(window).on("load",function(){
+					$("#boughtItems").mCustomScrollbar({theme:"dark"});
+					var topPosition= $("#boughtItems").position();
+					if()
+				});
+			})(jQuery);
+		</script>
     </body>
 </html>

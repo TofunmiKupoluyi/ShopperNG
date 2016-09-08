@@ -177,20 +177,24 @@ app.factory('CartService',function($http,$rootScope,$q){
 
 app.controller("cartController", function($rootScope,$scope, $http, CartService){
     $rootScope.myCart=[];
-    $scope.message="";
+    $rootScope.addToCartMessage=[];
+    $rootScope.visible= false;
     $scope.cartClick= function(itemId, itemName, itemPrice, itemQuantity, sellerId){
         CartService.onAddToCart(itemId, itemName, itemPrice, itemQuantity, sellerId)
         .then(function(response){
             $rootScope.myCart= response.itemsBought;
+            $rootScope.visible=true;
+            $rootScope.addToCartMessage.push({id: itemId, message:"You have added "+itemName+" to your cart"});
             console.log('The response:  ', response);
             console.log('Your cart: '+$rootScope.myCart);
-            
+
         })
         .catch(function(err){
             console.log('Oh! something blew: ',err);
         }); 
+
     };
-    
+
     $scope.getCart= function(){
         var myCart= $rootScope.myCart;
         console.log(myCart);
