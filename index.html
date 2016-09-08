@@ -16,7 +16,7 @@
         <title> Home | ShopperNG </title> 
 
     </head>
-    <body ng-cloak>
+    <body>
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -59,7 +59,7 @@
                                     <li><a href=""><i class="glyphicon glyphicon-user"></i> Account</a></li>
                                     <li><a href=""><i class="glyphicon glyphicon-star"></i> Wishlist</a></li>
                                     <li><a href="/checkout"><i class="glyphicon glyphicon-road"></i> Checkout</a></li>
-                                    <li><a href="/cart" ng-controller="cartItemsController" ng-click="getCart()"><span class="badge">{{numberItemsBought}}</span> Cart</a></li>
+                                    <li><a href="/cart" ng-controller="cartItemsController" ng-click="getCart()"><span class="badge" ng-cloak>{{numberItemsBought}}</span> Cart</a></li>
                                     <li><a href="/login"><i class="glyphicon glyphicon-lock"></i>Login</a></li>
                                 </ul>
                             </div>
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class="search_box pull-right" ng-controller="searchController">
+                            <div class="search_box pull-right" ng-controller="searchController" ng-cloak>
                                 <input type="text" placeholder="Search" ng-model="searchQuery"  ng-change="search()" ng-focus="boxShowed=true" ng-blur="boxShowed=false"></input>
                                 <div class="well" ng-show="boxShowed">
                                     <ul class="list-group">
