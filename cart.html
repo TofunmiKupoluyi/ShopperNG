@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class="search_box pull-right" ng-controller="searchController">
+                            <div class="search_box pull-right" ng-controller="searchController" ng-cloak>
                                 <input type="text" placeholder="Search" ng-model="searchQuery"  ng-change="search()" ng-focus="boxShowed=true" ng-blur="boxShowed=false"></input>
                                 <div class="well" ng-show="boxShowed">
                                     <ul class="list-group">
