@@ -280,7 +280,7 @@ signupRouter.post("/", function(request, response){
 loginRouter.get("/", function(request, response){
     console.log(request.session.itemsBought);
     if(request.session.email){
-        response.sendfile("./loggedinpage.html");
+        response.sendfile("./loggedInPage.html");
     }
     else{
         response.sendfile("./login.html");
