@@ -14,6 +14,8 @@ var checkoutRouter= express.Router();
 var paymentRouter= express.Router();
 var logoutRouter= express.Router();
 var thankYouRouter= express.Router();
+var productPageRouter= express.Router();
+var productRouter= express.Router();
 var connection= mysql.createConnection({
     host:process.env.MYSQL_HOST || "localhost",
     user:process.env.MYSQL_USERNAME|| "root",
@@ -38,6 +40,8 @@ app.use("/checkout", checkoutRouter);
 app.use("/logout", logoutRouter);
 app.use("/payment", paymentRouter);
 app.use("/thankyou", thankYouRouter);
+app.use("/productPage", productPageRouter);
+app.use("/products", productRouter);
 app.use(function(err, req, res, next) {
   console.error(err);
   res.status(500).send(err);
@@ -276,10 +280,10 @@ signupRouter.post("/", function(request, response){
 loginRouter.get("/", function(request, response){
     console.log(request.session.itemsBought);
     if(request.session.email){
-        response.sendfile("loggedinpage.html");
+        response.sendfile("./loggedinpage.html");
     }
     else{
-        response.sendfile("login.html");
+        response.sendfile("./login.html");
     }
 });
 loginRouter.post("/", function(request, response){
@@ -601,6 +605,35 @@ thankYouRouter.get("/", function(request, response){
         response.send("404 - Forbidden ");
     }
 });
-
+productRouter.get("/", function(request, response){
+    response.sendfile("./productDetails.html");
+})
+productPageRouter.get("/", function(request, response){
+    var productId= request.query.id;
+    var responseData= {
+        error:0,
+        productInformation:""
+    }
+    connection.query("SELECT Product_Name, Product_Category, Product_Brands, Product_Price, Seller_ID FROM products WHERE Product_Id=?",[productId], function(err, res){
+        if(err){
+            responseData.error=1;
+            responseData.productInformation="There is an error: "+err;
+            response.json(responseData);
+            console.log("There was an error "+err);
+        }
+        else{
+            if(res.length>0){
+                responseData.error=0;
+                responseData.productInformation=res[0];
+                response.json(responseData);
+            }
+            else{
+                responseData.error=1;
+                responseData.productInformation="Sorry, product is not available";
+                response.json(responseData);
+            }
+        }
+    });
+});
 
 console.log('We are live!!!!');

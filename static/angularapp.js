@@ -385,6 +385,23 @@ app.controller("gibberishTest", function($scope, $http){
         $http.get("/gibberishTest?password="+enc).then(function(response){
             console.log(response.data.password);
         });
-
     };
+});
+app.factory("ProductPageService", function($scope, $http){
+    return {
+        itemProductClick: function(productId){
+            $http.get("productPage?id="+productId).then(function(response){
+                console.log(response.data.productInformation);
+            });
+        }
+    }
+});
+app.controller("productPage", function($scope, $http, ProductPageService){
+    $scope.visitPageClick= function(id){
+        $http.get("productPage?id="+id).then(function(response){
+            console.log(response.data);
+        });
+        window.location="/products"
+    };
+    
 });
