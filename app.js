@@ -279,6 +279,7 @@ signupRouter.post("/", function(request, response){
 });
 loginRouter.get("/", function(request, response){
     console.log(request.session.itemsBought);
+    console.log(request.session.email);
     if(request.session.email){
         response.sendfile("./loggedInPage.html");
     }
@@ -316,6 +317,7 @@ loginRouter.post("/", function(request, response){
                     request.session.customerRefNo=res[0]["Customer_Id"];
                     console.log("Login successful, Customer: "+request.session.customerRefNo);
                     request.session.email=email;
+                    console.log(request.session.email);
                     response.json(data);
             }
                 else{
